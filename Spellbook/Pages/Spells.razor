@@ -1,7 +1,46 @@
 ﻿@page "/spells"
+@inject HttpClient Http
 
 <h3>Spells</h3>
+<div>
+    <Collapsable Title="Test" Collapsed="true" Value="">
+        This is my content
+    </Collapsable>
+    <Collapsable Title="Test2" Collapsed="true" Value="">
+        This is more content
+    </Collapsable>
+</div>
+@if (spells == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+<div>
+    @foreach (var spell in spells)
+            {
+                <Collapsable Title="@spell.Name" Collapsed="true" Value="">
+                        @spell.Description
+                </Collapsable>
+            }
+</div>
+}
 
 @code {
+    private Spell[]? spells;
 
+    protected override async Task OnInitializedAsync()
+    {
+        spells = await Http.GetFromJsonAsync<Spell[]>("data/spell.json");
+    }
+
+    public class Spell
+    {
+        public string Name { get; set; }
+
+        public string Range { get; set; }
+
+        public string Description { get; set; }
+
+    }
 }

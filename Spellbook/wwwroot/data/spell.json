@@ -1,0 +1,12 @@
+[
+  {
+    "description": "Big ball of fire!",
+    "name": "Fireball",
+    "range": "120 feet"
+  },
+  {
+    "description": "Bamf!",
+    "name": "Misty Step",
+    "range": "30 feet"
+  }
+]
