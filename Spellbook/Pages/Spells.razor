@@ -3,12 +3,7 @@
 
 <h3>Spells</h3>
 <div>
-    <Collapsable Title="Test" Collapsed="true" Value="">
-        This is my content
-    </Collapsable>
-    <Collapsable Title="Test2" Collapsed="true" Value="">
-        This is more content
-    </Collapsable>
+    
 </div>
 @if (spells == null)
 {
@@ -19,9 +14,26 @@ else
 <div>
     @foreach (var spell in spells)
             {
-                <Collapsable Title="@spell.Name" Collapsed="true" Value="">
-                        @spell.Description
-                </Collapsable>
+                <MudExpansionPanels>
+                    <MudExpansionPanel>
+                        <TitleContent><b>@spell.Name</b></TitleContent>
+                        <ChildContent>
+                            <MudGrid>
+                                <MudItem xs="3"><b>Level</b><br />@spell.Level</MudItem>
+                                <MudItem xs="3"><b>Casting Time</b><br />@spell.CastingTime</MudItem>
+                                <MudItem xs="3"><b>Range/Area</b><br />@spell.RangeArea</MudItem>
+                                <MudItem xs="3"><b>Components</b><br />@spell.Components</MudItem>
+                                <MudItem xs="3"><b>Duration</b><br />@spell.Duration</MudItem>
+                                <MudItem xs="3"><b>School</b><br />@spell.School</MudItem>
+                                <MudItem xs="3"><b>Attack/Save</b><br />@spell.AttackSave</MudItem>
+                                <MudItem xs="3"><b>Damage/Effect</b><br />@spell.DamageEffect</MudItem>
+                                <MudItem xs="12">@toMarkupString(@spell.Description)</MudItem>
+                                <MudItem xs="12"><MudPaper Class="d-flex align-center justify-center mud-width-full py-8">@toMarkupString(@spell.Notes)</MudPaper></MudItem>
+                                
+                            </MudGrid>
+                        </ChildContent>
+                    </MudExpansionPanel>
+                </MudExpansionPanels>
             }
 </div>
 }
@@ -33,14 +45,24 @@ else
     {
         spells = await Http.GetFromJsonAsync<Spell[]>("data/spell.json");
     }
-
+    protected MarkupString toMarkupString (string text)
+    {
+        return (MarkupString)text;
+    }
     public class Spell
     {
         public string Name { get; set; }
-
-        public string Range { get; set; }
-
+        public string Level { get; set; }
+        public string CastingTime { get; set; }
+        public string RangeArea { get; set; }
+        public string Components { get; set; }
+        public string Duration { get; set; }
+        public string School { get; set; }
+        public string AttackSave { get; set; }
+        public string DamageEffect { get; set; }
         public string Description { get; set; }
+
+        public string Notes { get; set; }
 
     }
 }
