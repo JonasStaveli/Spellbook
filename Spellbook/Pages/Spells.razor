@@ -43,12 +43,23 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        spells = await Http.GetFromJsonAsync<Spell[]>("data/spell.json");
+        //spells = await Http.GetFromJsonAsync<Spell[]>("data/spell.json");
+        spells = SortSpells(await Http.GetFromJsonAsync<Spell[]>("data/spell.json"));
     }
     protected MarkupString toMarkupString (string text)
     {
         return (MarkupString)text;
     }
+
+    protected Spell[] SortSpells(Spell[]? spells)
+    {
+        if (spells==null)
+        {
+            return new Spell[1];
+        }
+        return spells;
+    }
+
     public class Spell
     {
         public string Name { get; set; }
