@@ -15,7 +15,7 @@ else
     @foreach (var spell in spells)
             {
                 <MudExpansionPanels>
-                    <MudExpansionPanel>
+                    <MudExpansionPanel style=@(getColor(spell))>
                         <TitleContent><b>@spell.Name</b></TitleContent>
                         <ChildContent>
                             <MudGrid>
@@ -57,9 +57,16 @@ else
         {
             return new Spell[1];
         }
-        return spells;
+        string[] customOrder = { "Cantrip", "1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th" };
+        return spells.ToList().OrderBy(x => Array.IndexOf(customOrder,x.Level)).ThenBy(x => x.Name).ToArray();
     }
-
+    protected string getColor(Spell spell){
+        if(spell.Level == "Cantrip"||spell.Level=="2nd"||spell.Level=="4th"||spell.Level=="6th"||spell.Level=="8th"){
+            return "background-color:#e5e5e5;";
+        }else{
+            return "background-color:#fff";
+        }
+   }
     public class Spell
     {
         public string Name { get; set; }
